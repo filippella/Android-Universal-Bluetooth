@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+repositories {
+    google()
+    jcenter()
+    flatDir {
+        dirs project(':universal-bluetooth-sdk').file('../libs')
+    }
+}
+
+project.group = 'com.dalol.universalbluetooth'
+project.version = '1.0.0'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName version
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    dexOptions {
+        preDexLibraries = false
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+
+    lintOptions {
+        abortOnError false
+        lintConfig file("lint.xml")
+        disable 'TypographyFractions', 'TypographyQuotes', 'Deprecation', 'MissingTranslation'
+    }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
+        androidTest {
+            resources.srcDirs += ['src/androidTest/resources']
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}

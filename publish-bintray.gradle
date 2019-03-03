@@ -1,0 +1,28 @@
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    File localProperties = project.rootProject.file('local.properties')
+    Properties properties = new Properties()
+    if (localProperties.exists()) {
+        properties.load(localProperties.newDataInputStream())
+    }
+
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        userOrg = rootProject.properties.get('pom.developerId')
+        repo = rootProject.properties.get('pom.bintrayRepo')
+        name = rootProject.properties.get('pom.artifactId')
+        desc = rootProject.properties.get('pom.description')
+        websiteUrl = rootProject.properties.get('pom.url')
+        vcsUrl = rootProject.properties.get('pom.scmUrl')
+        licenses = rootProject.properties.get('pom.licenceName')
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            desc = rootProject.properties.get('pom.description')
+        }
+    }
+}

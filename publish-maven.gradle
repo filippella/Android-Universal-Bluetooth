@@ -1,0 +1,23 @@
+apply plugin: 'maven'
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: 'releases repo') {
+                    authentication(
+                            userName: rootProject.properties.get('artifactory.username'),
+                            password: rootProject.properties.get('artifactory.token')
+                    )
+                }
+
+                snapshotRepository(url: 'snapshots repo') {
+                    authentication(
+                            userName: rootProject.properties.get('artifactory.username'),
+                            password: rootProject.properties.get('artifactory.token')
+                    )
+                }
+            }
+        }
+    }
+}

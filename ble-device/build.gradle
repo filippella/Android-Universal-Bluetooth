@@ -1,0 +1,7 @@
+apply from: '../common-build.gradle'
+
+dependencies {
+
+}
+
+apply from: '../publish-maven.gradle'
